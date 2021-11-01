@@ -11,14 +11,31 @@ eureka:
 spring:
   application:
     name: apigateway-service
-#  cloud:
-#    gateway:
-#      routes:
-#        - id: service-admin
-#          uri: http://localhost:8001/
-#          predicates:
-#            - Path=/service-admin/**
-#        - id: service-user
-#          uri: http://localhost:9001/
-#          predicates:
-#            - Path=/service-user/**
+  cloud:
+    gateway:
+      routes:
+        - id: service-admin
+          uri: http://localhost:8001/
+          predicates:
+            - Path=/service-admin/**
+          filters:
+            - AddRequestHeader=first-request, service-admin-request
+            - CustomApiFilter
+            - AddResponseHeader=first-response, service-admin-response
+        - id: service-user
+          uri: http://localhost:9001/
+          predicates:
+            - Path=/service-user/**
+          filters:
+            - name: CustomApiFilter
+            - name: LogiingFilter
+              args:
+                baseMessage: Spring cloud gateway filter
+                preLogger: true
+                postLogger: true
+      default-filters:
+        - name: GlobalApiFilter
+          args:
+            baseMessage: Spring cloud gateway filter
+            preLogger: true
+            postLogger: true
