@@ -18,8 +18,13 @@ public class ApiController {
     }
 
     @GetMapping("/message")
-    public String message(@RequestHeader("service-request")String header) {
+    public String message(@RequestHeader("first-request")String header) {
         log.info(header);
         return header;
+    }
+
+    @GetMapping("/check")
+    public String check() {
+        return "hi, there. This is a message from admin service";
     }
 }
