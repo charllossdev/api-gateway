@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class ApiController {
 
-    @GetMapping("/welcome")
+    @GetMapping("/welcomeeee")
     public String welcome() {
         return "welcome to the admin service";
     }
